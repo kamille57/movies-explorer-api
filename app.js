@@ -17,7 +17,7 @@ const { PORT, DB_ADRESS } = process.env;
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001', 'https://kamille57.nomoredomainsrocks.ru', 'https://api.kamille57.nomoredomainsrocks.ru'], credentials: true }));
+app.use(cors({ origin: ['http://localhost:3000', 'http://localhost:3001', 'https://movie.nomoredomainsmonster.ru', 'https://api.movie.nomoredomainsmonster.ru'], credentials: true }));
 mongoose.connect(DB_ADRESS, { useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(express.json());
