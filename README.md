@@ -8,4 +8,4 @@
 
 IP 51.250.12.127
 
-Backend https://api.movie.nomoredomainsmonster.ru
+Backend https://api.move.nomoredomainsmonster.ru

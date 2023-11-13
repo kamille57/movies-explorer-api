@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { LOGOUT_MESSAGE } = require('../utils/errorMessages');
+const { LOGOUT_MESSAGE } = require('../utils/constants');
 const {
   login,
   createUser,

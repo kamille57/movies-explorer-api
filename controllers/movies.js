@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable consistent-return */
 const Movie = require('../models/movie');
 const { BadRequestError } = require('../errors/BadRequestError');
@@ -12,7 +11,7 @@ const {
   SUCCESS_DELETE_MOVIE_MESSAGE,
   SUCCESS_STATUS_CODE,
   SUCCESS_CREATION_STATUS_CODE,
-} = require('../utils/errorMessages');
+} = require('../utils/constants');
 
 // Получить все карточки
 module.exports.getMovies = async (req, res, next) => {
@@ -71,9 +70,7 @@ module.exports.createMovie = async (req, res, next) => {
 module.exports.deleteMovie = async (req, res, next) => {
   try {
     const { movieId } = req.params;
-    console.log(req.params);
     const movie = await Movie.findById(movieId);
-    console.log(movie);
     if (!movie) {
       throw new NotFoundError(INVALID_MOVIEDATA_MESSAGE);
     }

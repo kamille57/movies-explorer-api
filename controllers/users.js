@@ -13,13 +13,12 @@ const {
   CONFLICT_USER_MESSAGE,
   SUCCESS_STATUS_CODE,
   SUCCESS_CREATION_STATUS_CODE,
-} = require('../utils/errorMessages');
+} = require('../utils/constants');
 
 const SALT_ROUNDS = 10;
 
 module.exports.getUserInfo = async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  console.log(user);
   try {
     if (!user) {
       throw new NotFoundError(USER_NOT_FOUND_MESSAGE);
@@ -47,7 +46,7 @@ module.exports.createUser = async (req, res, next) => {
       password: hash,
     });
 
-    return res.status(SUCCESS_STATUS_CREATION_CODE).send({
+    return res.status(SUCCESS_CREATION_STATUS_CODE).send({
       name: user.name,
       email: user.email,
     });
@@ -83,13 +82,12 @@ module.exports.login = async (req, res, next) => {
 };
 
 module.exports.updateProfile = async (req, res, next) => {
-  const { name } = req.body;
+  const { email, name } = req.body;
   const userId = req.user.id;
-
   try {
     const updatedUser = await User.findByIdAndUpdate(userId, {
+      email,
       name,
-      about
     }, {
       new: true,
       runValidators: true,
@@ -101,6 +99,9 @@ module.exports.updateProfile = async (req, res, next) => {
   } catch (error) {
     if (error.name === 'ValidationError') {
       return next(new BadRequestError(INVALID_USERDATA_MESSAGE));
+    }
+    if (error.code === 11000) {
+      return next(new ConflictError(CONFLICT_USER_MESSAGE));
     }
     return next(error);
   }
